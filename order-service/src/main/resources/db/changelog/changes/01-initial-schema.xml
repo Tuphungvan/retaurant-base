@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <property name="uuidType" value="uuid"/>
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet id="01-users-table" author="pvt">
+        <createTable tableName="users">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="login" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(50)" defaultValue="ACTIVE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="login_verified" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="google_id" type="varchar(255)"/>
+            <column name="password_hash" type="varchar(255)"/>
+            <column name="password_changed_at" type="timestamptz"/>
+            <column name="created_at" type="timestamptz" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamptz" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="users" columnNames="login" constraintName="uk_users_login"/>
+        <addUniqueConstraint tableName="users" columnNames="google_id" constraintName="uk_users_google_id"/>
+    </changeSet>
+
+    <changeSet id="01-roles-table" author="pvt">
+        <createTable tableName="roles">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+            <column name="created_at" type="timestamptz" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamptz" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="roles" columnNames="name" constraintName="uk_roles_name"/>
+    </changeSet>
+
+    <changeSet id="01-permissions-table" author="pvt">
+        <createTable tableName="permissions">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="varchar(255)"/>
+            <column name="created_at" type="timestamptz" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamptz" defaultValueComputed="${now}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="permissions" columnNames="name" constraintName="uk_permissions_name"/>
+    </changeSet>
+
+    <changeSet id="01-user-roles-table" author="pvt">
+        <createTable tableName="user_roles">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_user_roles_user" references="users(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="role_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_user_roles_role" references="roles(id)"
+                             deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="user_roles" columnNames="user_id, role_id"
+                             constraintName="uk_user_roles_user_role"/>
+    </changeSet>
+
+    <changeSet id="01-role-permissions-table" author="pvt">
+        <createTable tableName="role_permissions">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="role_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_role_permissions_role" references="roles(id)"
+                             deleteCascade="true"/>
+            </column>
+            <column name="permission_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_role_permissions_permission"
+                             references="permissions(id)" deleteCascade="true"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="role_permissions" columnNames="role_id, permission_id"
+                             constraintName="uk_role_permissions_role_permission"/>
+    </changeSet>
+
+</databaseChangeLog>
