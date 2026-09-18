@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Mock data for restaurants -->
+    <changeSet id="02-mock-data-restaurants" author="pvt">
+        <insert tableName="restaurants">
+            <column name="id" value="0191e4f1-0001-7000-8000-000000000001"/>
+            <column name="name" value="Phở Thìn Bờ Hồ"/>
+            <column name="phone" value="0901234567"/>
+            <column name="address" value="61 Đinh Tiên Hoàng, Hoàn Kiếm, Hà Nội"/>
+            <column name="is_open" valueBoolean="true"/>
+        </insert>
+        <insert tableName="restaurants">
+            <column name="id" value="0191e4f1-0002-7000-8000-000000000002"/>
+            <column name="name" value="Cơm Tấm Ba Ghiền"/>
+            <column name="phone" value="0912345678"/>
+            <column name="address" value="84 Đặng Văn Ngữ, Phường 10, Phú Nhuận, TP. Hồ Chí Minh"/>
+            <column name="is_open" valueBoolean="true"/>
+        </insert>
+        <insert tableName="restaurants">
+            <column name="id" value="0191e4f1-0003-7000-8000-000000000003"/>
+            <column name="name" value="Bún Bò Huế Đông Ba"/>
+            <column name="phone" value="0923456789"/>
+            <column name="address" value="110 Nguyễn Du, Bến Thành, Quận 1, TP. Hồ Chí Minh"/>
+            <column name="is_open" valueBoolean="true"/>
+        </insert>
+        <insert tableName="restaurants">
+            <column name="id" value="0191e4f1-0004-7000-8000-000000000004"/>
+            <column name="name" value="Hải Sản Bé Mặn"/>
+            <column name="phone" value="0934567890"/>
+            <column name="address" value="Lô 11 Võ Nguyên Giáp, Sơn Trà, Đà Nẵng"/>
+            <column name="is_open" valueBoolean="true"/>
+        </insert>
+        <insert tableName="restaurants">
+            <column name="id" value="0191e4f1-0005-7000-8000-000000000005"/>
+            <column name="name" value="Tiệm Ăn Vặt &amp; Trà Sữa Sài Gòn"/>
+            <column name="phone" value="0945678901"/>
+            <column name="address" value="123 Cách Mạng Tháng 8, Phường 7, Quận Tân Bình, TP. Hồ Chí Minh"/>
+            <column name="is_open" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+    <!-- Mock data for foods -->
+    <changeSet id="02-mock-data-foods" author="pvt">
+        <!-- Foods of Phở Thìn Bờ Hồ -->
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0001-7000-8000-000000000001"/>
+            <column name="restaurant_id" value="0191e4f1-0001-7000-8000-000000000001"/>
+            <column name="name" value="Phở Bò Tái Lăn"/>
+            <column name="price" valueNumeric="75000.0"/>
+            <column name="category" value="NOODLE"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-pho-bo-tai-lan-01"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0005-7000-8000-000000000005"/>
+            <column name="restaurant_id" value="0191e4f1-0001-7000-8000-000000000001"/>
+            <column name="name" value="Trà Đào Cam Sả"/>
+            <column name="price" valueNumeric="35000.0"/>
+            <column name="category" value="DINK"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-tra-dao-cam-sa-05"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0006-7000-8000-000000000006"/>
+            <column name="restaurant_id" value="0191e4f1-0001-7000-8000-000000000001"/>
+            <column name="name" value="Cà Phê Sữa Đá"/>
+            <column name="price" valueNumeric="28000.0"/>
+            <column name="category" value="DINK"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-ca-phe-sua-da-06"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+
+        <!-- Foods of Cơm Tấm Ba Ghiền -->
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0003-7000-8000-000000000003"/>
+            <column name="restaurant_id" value="0191e4f1-0002-7000-8000-000000000002"/>
+            <column name="name" value="Cơm Tấm Sườn Bì Chả"/>
+            <column name="price" valueNumeric="85000.0"/>
+            <column name="category" value="EAT"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-com-tam-suon-03"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0004-7000-8000-000000000004"/>
+            <column name="restaurant_id" value="0191e4f1-0002-7000-8000-000000000002"/>
+            <column name="name" value="Cơm Gà Xối Mỡ"/>
+            <column name="price" valueNumeric="55000.0"/>
+            <column name="category" value="EAT"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-com-ga-xoi-mo-04"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+
+        <!-- Foods of Bún Bò Huế Đông Ba -->
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0002-7000-8000-000000000002"/>
+            <column name="restaurant_id" value="0191e4f1-0003-7000-8000-000000000003"/>
+            <column name="name" value="Bún Bò Huế Đặc Biệt"/>
+            <column name="price" valueNumeric="65000.0"/>
+            <column name="category" value="NOODLE"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-bun-bo-hue-02"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+
+        <!-- Foods of Hải Sản Bé Mặn -->
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0009-7000-8000-000000000009"/>
+            <column name="restaurant_id" value="0191e4f1-0004-7000-8000-000000000004"/>
+            <column name="name" value="Mực Nướng Sa Tế"/>
+            <column name="price" valueNumeric="160000.0"/>
+            <column name="category" value="SEAFOOD"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-muc-nuong-sa-te-09"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0010-7000-8000-000000000010"/>
+            <column name="restaurant_id" value="0191e4f1-0004-7000-8000-000000000004"/>
+            <column name="name" value="Tôm Sú Nướng Muối Ớt"/>
+            <column name="price" valueNumeric="220000.0"/>
+            <column name="category" value="SEAFOOD"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-tom-su-nuong-10"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+
+        <!-- Foods of Tiệm Ăn Vặt & Trà Sữa Sài Gòn -->
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0007-7000-8000-000000000007"/>
+            <column name="restaurant_id" value="0191e4f1-0005-7000-8000-000000000005"/>
+            <column name="name" value="Khoai Tây Chiên Lắc Phô Mai"/>
+            <column name="price" valueNumeric="40000.0"/>
+            <column name="category" value="SNACK"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-khoai-tay-chien-07"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+        <insert tableName="foods">
+            <column name="id" value="0191e4f2-0008-7000-8000-000000000008"/>
+            <column name="restaurant_id" value="0191e4f1-0005-7000-8000-000000000005"/>
+            <column name="name" value="Bánh Tráng Trộn Long An"/>
+            <column name="price" valueNumeric="25000.0"/>
+            <column name="category" value="SNACK"/>
+            <column name="image_url" value="https://images.unsplash.com/photo-banh-trang-tron-08"/>
+            <column name="is_available" valueBoolean="true"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>
