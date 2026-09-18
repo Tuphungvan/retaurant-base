@@ -16,6 +16,7 @@ spring:
     drop-first: false
     change-log: classpath:/liquibase/master.xml
     default-schema: restaurant
+    liquibase-schema: public
 
   jpa:
     hibernate:
@@ -25,3 +26,17 @@ spring:
       hibernate:
         format_sql: true
         default_schema: restaurant
+
+  data:
+    web:
+      pageable:
+        max-page-size: 100
+        default-page-size: 20
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
