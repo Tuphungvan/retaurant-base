@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <property name="uuidType" value="uuid"/>
+
+    <!-- Table: restaurants -->
+    <changeSet id="01-create-table-restaurants" author="pvt">
+        <createTable tableName="restaurants">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone" type="varchar(13)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_open" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamptz" defaultValueComputed="NULL">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <!-- unique: (name, phone, address) where deleted_at is null -->
+        <sql dbms="postgresql">
+            CREATE UNIQUE INDEX uk_restaurants_name_phone_address_active
+            ON restaurants (name, phone, address)
+            WHERE deleted_at IS NULL;
+        </sql>
+    </changeSet>
+
+    <!-- Table: foods -->
+    <changeSet id="01-create-table-foods" author="pvt">
+        <createTable tableName="foods">
+            <column name="id" type="${uuidType}" defaultValueComputed="public.uuid_generate_v7()">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="restaurant_id" type="${uuidType}">
+                <constraints nullable="false" foreignKeyName="fk_foods_restaurant"
+                             references="restaurants(id)" deleteCascade="true"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="double precision">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image_url" type="text">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_available" type="boolean" defaultValueBoolean="true">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamptz" defaultValueComputed="NULL">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <!-- unique: (restaurant_id, name) where deleted_at is null -->
+        <sql dbms="postgresql">
+            CREATE UNIQUE INDEX uk_foods_restaurant_name_active
+            ON foods (restaurant_id, name)
+            WHERE deleted_at IS NULL;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
