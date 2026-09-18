@@ -19,7 +19,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres-res-dt:/var/lib/postgresql/data
+      - postgres-res-dt:/var/lib/postgresql
     restart: unless-stopped
 
   kafka-res:
